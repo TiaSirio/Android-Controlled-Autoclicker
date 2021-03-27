@@ -43,7 +43,7 @@ public class Client extends Observable<String> {
                         }
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                    setActive(false);
                 }
             }
         });
