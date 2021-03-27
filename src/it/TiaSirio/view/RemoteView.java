@@ -30,7 +30,6 @@ public class RemoteView extends View {
     @Override
     public void update(String arg) {
         sendMessage(arg);
-
     }
 
 

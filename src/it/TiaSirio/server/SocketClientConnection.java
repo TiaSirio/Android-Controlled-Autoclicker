@@ -6,6 +6,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class SocketClientConnection extends Observable<String> implements Runnable {
@@ -34,6 +35,21 @@ public class SocketClientConnection extends Observable<String> implements Runnab
         }
     }
 
+    public synchronized void closeConnection() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            System.err.println("Unable to close the socket");
+        }
+        active = false;
+    }
+
+    private void close() {
+        closeConnection();
+        System.out.println("Deregistering client...");
+        System.out.println("Done!");
+    }
+
     @Override
     public void run() {
         Scanner in;
@@ -50,8 +66,10 @@ public class SocketClientConnection extends Observable<String> implements Runnab
                 read = in.nextLine();
                 notifyObservers(read);
             }
-        } catch (IOException | AWTException e) {
+        } catch (IOException | AWTException | NoSuchElementException e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
     }
 }
