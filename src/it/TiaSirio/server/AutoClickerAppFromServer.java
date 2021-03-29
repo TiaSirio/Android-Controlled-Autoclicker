@@ -1,6 +1,5 @@
 package it.TiaSirio.server;
 
-import it.TiaSirio.client.AutoClicker;
 import it.TiaSirio.utils.Messages;
 import it.TiaSirio.utils.Observable;
 import it.TiaSirio.utils.Observer;
@@ -23,19 +22,21 @@ public class AutoClickerAppFromServer extends Observable<String> implements Obse
         this.activeConnection.add(socketClientConnection);
     }
 
+
+
     public void startApp(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                //while (true) {
                     if (checked && value >= 100){
                         try {
                             Thread.sleep(value);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        //robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                        //robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                         System.out.println("Attivo");
                     } else {
                         try {
@@ -45,7 +46,7 @@ public class AutoClickerAppFromServer extends Observable<String> implements Obse
                         }
                         System.out.println("Inattivo");
                     }
-                }
+                //}
             }
         }).start();
     }

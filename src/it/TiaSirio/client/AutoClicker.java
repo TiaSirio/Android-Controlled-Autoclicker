@@ -5,6 +5,7 @@ import it.TiaSirio.utils.Messages;
 import it.TiaSirio.utils.Observer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +22,8 @@ public class AutoClicker extends JFrame implements Observer<String> {
     public AutoClicker (Client client){ //throws IOException {
         this.client = client;
         //Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("Maiale.png"));
+        //this.setIconImage(img);
+        //Image img = Toolkit.getDefaultToolkit().getImage(AutoClicker.class.getResource("Maiale.png"));
         //this.setIconImage(img);
         setResizable(false);
         setTitle("Autoclicker");

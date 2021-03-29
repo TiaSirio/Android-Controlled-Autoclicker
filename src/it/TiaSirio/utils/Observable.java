@@ -20,4 +20,10 @@ public class Observable<T> {
         }
     }
 
+    public void removeObserver(Observer observer){
+        synchronized (observers){
+            observers.remove(observer);
+        }
+    }
+
 }

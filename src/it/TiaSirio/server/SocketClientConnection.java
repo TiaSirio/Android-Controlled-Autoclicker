@@ -46,6 +46,7 @@ public class SocketClientConnection extends Observable<String> implements Runnab
 
     private void close() {
         closeConnection();
+        server.removeConnection(this);
         System.out.println("Deregistering client...");
         System.out.println("Done!");
     }

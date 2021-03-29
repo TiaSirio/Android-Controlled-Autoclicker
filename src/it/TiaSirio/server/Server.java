@@ -6,6 +6,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,6 +16,7 @@ public class Server implements Runnable{
     private final ServerSocket serverSocket;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
     private AutoClickerAppFromServer autoClickerAppFromServer = null;
+    private HashMap<SocketClientConnection, RemoteView> connectedClient = new HashMap<>();
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
@@ -25,6 +27,7 @@ public class Server implements Runnable{
         autoClickerAppFromServer.addConnection(socketClientConnection);
         RemoteView remoteView = new RemoteView(socketClientConnection);
         remoteView.addObserver(this.autoClickerAppFromServer);
+        this.connectedClient.put(socketClientConnection, remoteView);
         autoClickerAppFromServer.addObserver(remoteView);
         autoClickerAppFromServer.startApp();
     }
@@ -33,7 +36,14 @@ public class Server implements Runnable{
         autoClickerAppFromServer.addConnection(socketClientConnection);
         RemoteView remoteView = new RemoteView(socketClientConnection);
         remoteView.addObserver(this.autoClickerAppFromServer);
+        this.connectedClient.put(socketClientConnection, remoteView);
         autoClickerAppFromServer.addObserver(remoteView);
+    }
+
+    public synchronized void removeConnection(SocketClientConnection socketClientConnection){
+        RemoteView remoteView = connectedClient.get(socketClientConnection);
+        remoteView.removeObserver(this.autoClickerAppFromServer);
+        this.autoClickerAppFromServer.removeObserver(remoteView);
     }
 
     public synchronized boolean appInExecution(){
@@ -48,6 +58,7 @@ public class Server implements Runnable{
                 Socket socket = serverSocket.accept();
                 SocketClientConnection socketClientConnection = new SocketClientConnection(socket,this);
                 executorService.submit(socketClientConnection);
+                System.out.println("Connected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
