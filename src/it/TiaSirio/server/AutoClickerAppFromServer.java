@@ -28,25 +28,25 @@ public class AutoClickerAppFromServer extends Observable<String> implements Obse
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //while (true) {
+                while (true) {
                     if (checked && value >= 100){
                         try {
                             Thread.sleep(value);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        //robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                        //robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-                        System.out.println("Attivo");
+                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        //System.out.println("Attivo");
                     } else {
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("Inattivo");
+                        //System.out.println("Inattivo");
                     }
-                //}
+                }
             }
         }).start();
     }

@@ -6,8 +6,12 @@ import it.TiaSirio.utils.Observer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
+import java.net.URI;
 
 public class AutoClicker extends JFrame implements Observer<String> {
 
@@ -17,19 +21,31 @@ public class AutoClicker extends JFrame implements Observer<String> {
     private JPanel panel1;
     private JButton enableButton;
     private JButton disableButton;
-    private JTextField textField1;
+    private JTextField delay;
+    private JLabel IPField;
+    private JLabel appField;
+    private JCheckBox sword;
+    private JCheckBox mining;
 
     public AutoClicker (Client client){ //throws IOException {
         this.client = client;
-        //Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("Maiale.png"));
-        //this.setIconImage(img);
-        //Image img = Toolkit.getDefaultToolkit().getImage(AutoClicker.class.getResource("Maiale.png"));
-        //this.setIconImage(img);
+        Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("Maiale_logo.png"));
+        this.setIconImage(img);
         setResizable(false);
         setTitle("Autoclicker");
         setContentPane(panel1);
+        appField.setText("To control your AutoClicker from your smartphone click here to download the app!");
         setListeners();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        String IPString = null;
+        try {
+            IPString = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        IPField.setText("Your current IP is: " + IPString + " ➪ Insert it in the smartphone app ;)");
+        IPField.setHorizontalAlignment(SwingConstants.CENTER);
+        IPField.setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
     public void setListeners () throws NumberFormatException{
@@ -38,10 +54,10 @@ public class AutoClicker extends JFrame implements Observer<String> {
             public void actionPerformed(ActionEvent e) {
                 checked = true;
                 sendMessage(Messages.START);
-                if (textField1.getText().equals("")) {
+                if (delay.getText().equals("")) {
                     value = 0;
                 } else {
-                    value = Integer.parseInt(textField1.getText());
+                    value = Integer.parseInt(delay.getText());
                 }
                 sendMessage(String.valueOf(value));
             }
@@ -52,6 +68,57 @@ public class AutoClicker extends JFrame implements Observer<String> {
             public void actionPerformed(ActionEvent e) {
                 checked = false;
                 sendMessage(Messages.STOP);
+            }
+        });
+
+        appField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                URI uri = null;
+                try {
+                    uri = new URI("https://github.com/TiaSirio/AutoClicker_App");
+                    Desktop.getDesktop().browse(uri);
+                } catch (URISyntaxException | IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        sword.setText("Sword");
+        sword.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                mining.setSelected(false);
+                delay.setText("600");
+            }
+        });
+
+        mining.setText("Mining");
+        mining.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                sword.setSelected(false);
+                delay.setText("100");
             }
         });
     }
@@ -70,7 +137,7 @@ public class AutoClicker extends JFrame implements Observer<String> {
             this.disableButton.setEnabled(false);
             this.enableButton.setEnabled(true);
         } else {
-            this.textField1.setText(msg);
+            this.delay.setText(msg);
         }
     }
 }
