@@ -28,4 +28,4 @@ The Android app for controlling this autoclicker is available in [this repositor
 
 ## Author 👨‍💻
 
-- Mattia Siriani
+- [TiaSirio](https://www.github.com/TiaSirio)
