@@ -1,6 +1,7 @@
 # Android-Controlled Autoclicker 🤖🖱️
 
 An autoclicker that can be controlled with an app on Android. The Android app for controlling this autoclicker is available in [this repository](https://github.com/TiaSirio/AutoClicker_App).
+**The app is no more available!!!**
 
 ## Overview 🌐
 
@@ -25,6 +26,7 @@ Ensure you follow the setup instructions and use the Android app to control the 
 ## Android App Repository 📱
 
 The Android app for controlling this autoclicker is available in [this repository](https://github.com/TiaSirio/AutoClicker_App).
+**The app is no more available!!!**
 
 ## Author 👨‍💻
 
