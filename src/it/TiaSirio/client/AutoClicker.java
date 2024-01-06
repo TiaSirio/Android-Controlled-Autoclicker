@@ -32,9 +32,10 @@ public class AutoClicker extends JFrame implements Observer<String> {
         Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("Maiale_logo.png"));
         this.setIconImage(img);
         setResizable(false);
+
         setTitle("Autoclicker");
         setContentPane(panel1);
-        appField.setText("To control your AutoClicker from your smartphone click here to download the app!");
+        appField.setText("<html><u>To control your AutoClicker from your smartphone, click here to download the app!</u></html>");
         setListeners();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         String IPString = null;
@@ -46,6 +47,13 @@ public class AutoClicker extends JFrame implements Observer<String> {
         IPField.setText("Your current IP is: " + IPString + " ➪ Insert it in the smartphone app ;)");
         IPField.setHorizontalAlignment(SwingConstants.CENTER);
         IPField.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        int spaceBelowComponents = 10;
+        appField.setBorder(BorderFactory.createEmptyBorder(spaceBelowComponents, 0, spaceBelowComponents, 0));
+        IPField.setBorder(BorderFactory.createEmptyBorder(spaceBelowComponents, 0, spaceBelowComponents, 0));
+
+        int spaceAboveTitle = 5;
+        panel1.setBorder(BorderFactory.createEmptyBorder(spaceAboveTitle, 0, 0, 0));
     }
 
     public void setListeners () throws NumberFormatException{
@@ -76,7 +84,7 @@ public class AutoClicker extends JFrame implements Observer<String> {
             public void mouseClicked(MouseEvent e) {
                 URI uri = null;
                 try {
-                    uri = new URI("https://github.com/TiaSirio/AutoClicker_App");
+                    uri = new URI("https://github.com/TiaSirio/Android-Controlled-Autoclicker-App");
                     Desktop.getDesktop().browse(uri);
                 } catch (URISyntaxException | IOException exception) {
                     exception.printStackTrace();
